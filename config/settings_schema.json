@@ -1,1 +1,29 @@
+<<<<<<< HEAD
 []
+=======
+[
+ 
+   
+    {
+        "name": "Product Card",
+        "settings": [
+               {
+                "type": "select",
+                "id": "variant_style",
+                "label": "Variant style",
+                "options": [
+                    {
+                    "value": "button",
+                    "label": "Button"
+                    },
+                    {
+                    "value": "select",
+                    "label": "Select"
+                    }
+                ],
+                "default": "button"
+                }
+        ]
+    }
+]    
+>>>>>>> a0c377f ( featured collection variant ststem)

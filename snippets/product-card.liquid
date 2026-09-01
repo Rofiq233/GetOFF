@@ -1,0 +1,49 @@
+           {{ 'product-variants.css' |  asset_url |  stylesheet_tag }} 
+          <div class="sellers__item">
+            <div class="sellers__card">
+              <a href="#">
+                {%- render 'smart-image',
+                image: product.featured_image,
+                loading:"lazy",
+                width:500,
+                widths:"200,300,400,500",
+                sizes:"(min-width:1200px) 23vw, (min-width:768px) 30vw, 45vw",
+                placeholder:placeholder
+                -%}
+              </a>
+            </div>
+            <div class="sellers_content-wrap">
+              {% if product.has_only_default_variant == false %}
+                 {%- render 'variants', product: product -%}
+              {% endif %}
+              <div class="sellers__item-content">
+  
+                <div class="sellers__item-star-wrap">
+                  <div class="sellers__item-star">
+                   {{'yellow-star.svg' | inline_asset_content }}
+                  </div>
+                  <div class="sellers__item-star-text">
+                    <em>Rated 4.8</em>
+                    (1,694)
+                  </div> 
+                </div>
+                {% if product.title != blank %}
+                  <h2>{{product.title}}</h2>
+                  {% else %}
+                  <h2>Product title</h2>
+                {% endif %}
+                
+                <div class="sellers__item-price">
+                  {% if product.price != blank %}
+                    {{ product.price | money }}
+                    {% else %}
+                    $99.00
+                  {% endif %}
+                </div>
+                <div class="sellers__item-btn">
+                  <a class="btn-common" href="#">VIEW DETAILS</a>
+                </div>
+              </div>
+
+            </div>
+          </div>

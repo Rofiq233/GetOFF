@@ -1,0 +1,97 @@
+
+
+  
+  <product-variants
+    class="product-variants"
+    data-product-id="{{ product.id }}"
+    data-product-url="{{ product.url }}"
+    data-variant-style="{{ settings.variant_style }}"
+    data-currency="{{ cart.currency.iso_code }}"
+  >
+
+    {% for option in product.options_with_values %}
+
+      <div class="product-variants__option" data-option-position="{{ option.position }}">
+
+        <div class="product-variants__label">
+          {{ option.name }}
+        </div>
+
+        {% if settings.variant_style == 'button' %}
+
+          <div class="product-variants__values">
+
+            {% for value in option.values %}
+
+              {% assign input_id = 'product-variant-' | append: product.id | append: '-' | append: option.position | append: '-' | append: forloop.index %}
+
+              <input
+                type="radio"
+                id="{{ input_id }}"
+                name="option-{{ product.id }}-{{ option.position }}"
+                value="{{ value | escape }}"
+                class="product-variants__input"
+                data-option-position="{{ option.position }}"
+            {% if  option.selected_value == value %} checked {% endif  %}
+              >
+
+              <label
+                for="{{ input_id }}"
+                class="product-variants__button"
+              >
+                {{ value }}
+              </label>
+
+            {% endfor %}
+
+          </div>
+
+        {% else %}
+
+          <div
+            class="product-variants__select"
+            data-option-position="{{ option.position }}"
+          >
+
+            <button
+              type="button"
+              class="product-variants__select-trigger"
+              aria-expanded="false"
+            >
+              <span class="product-variants__select-value">
+                {{ option.values.first }}
+              </span>
+
+              <span class="product-variants__select-icon">
+                +
+              </span>
+            </button>
+
+            <ul class="product-variants__options" hidden>
+
+              {% for value in option.values %}
+
+                <li
+                  class="product-variants__select-option" {% if  option.selected_value == value %} checked {% endif  %}
+                  data-option-value="{{ value | escape }}"
+                >
+                  {{ value }}
+                </li>
+
+              {% endfor %}
+
+            </ul>
+
+          </div>
+
+        {% endif %}
+
+      </div>
+
+    {% endfor %}
+      <script type="application/json" data-product-variants>
+        {{ product.variants | json }}
+      </script>
+  </product-variants>
+
+

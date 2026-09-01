@@ -1,17 +1,24 @@
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="{{ request.locale.iso_code }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Theme development</title>
+    {{ 'reboot.css' |  asset_url | stylesheet_tag }}
     {{ 'base.css' |  asset_url | stylesheet_tag }}
     {{ 'theme.css' |  asset_url | stylesheet_tag }}
-    {{ 'global.js' |  asset_url | script_tag }}
-    {{ 'theme.js' |  asset_url | script_tag }}
+
     {{ content_for_header }}
 </head>
 <body>
     {{ content_for_layout }}
+
+
+    <script>
+        Shopify.money_format = {{ shop.money_format | json }};
+    </script>
+    {{ 'global.js' |  asset_url | script_tag }}
+    {{ 'theme.js' |  asset_url | script_tag }}
 </body>
 </html>

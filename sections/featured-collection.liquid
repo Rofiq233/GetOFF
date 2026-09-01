@@ -1,0 +1,75 @@
+{%- assign s = section.settings -%}
+
+<div class="sellers__inner">
+  <div class="common-wrap">
+    <div class="sellers__wrapper">
+      <div class="sellers__top">
+        <h3>Best Sellers</h3>
+        <h2>Customer Favorites:
+          <em>Tried & Loved</em>
+        </h2>
+        <p>Discover our most popular pieces, designed for comfort and style. Find your perfect match
+ 
+ 
+                                today!</p>
+      </div>
+      <div class="sellers__wrap">
+        <div class="sellers__items">
+
+          {%- assign product_limit = s.limit  -%}
+           {%- assign products = s.featured_coll.products  -%}
+             {% if s.featured_coll != blank %}
+              {%- assign product_to_render = products -%}
+              {% else %}
+              {%- assign product_to_render = (1..product_limit) -%}
+             {% endif %}
+            {% for product in product_to_render, limit: product_limit %}
+                {% assign placeholder_index = forloop.index0 | modulo: 4 | plus: 1 %}
+                {% assign placeholder_name = 'product-apparel-' | append: placeholder_index %}
+              {%- render 'product-card'
+                , product: product,
+                placeholder:placeholder_name -%}
+            {% endfor %}
+        </div>
+        <div class="sellers__arrow">
+          <div class="sellers__left-arrow hidden">
+            <img src="assets/img/right-arrow.svg" alt="">
+          </div>
+          <div class="sellers__right-arrow">
+            <img src="assets/img/right-arrow.svg" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  {{ 'product-variants.js' |  asset_url |  script_tag }}
+
+{% schema %}
+  {
+    "name": "Featured Collection",
+    "tag": "section",
+    "class": "featured-collection",
+    "settings": [
+      {
+        "type": "collection",
+        "id": "featured_coll",
+        "label": "Featured Collection"
+      }, {
+        "type": "range",
+        "id": "limit",
+        "max": 20,
+        "min": 4,
+        "step": 1,
+        "default": 4,
+        "label": "Product limit"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Featured Collection",
+        "settings": {}
+      }
+    ]
+  }
+{% endschema %}

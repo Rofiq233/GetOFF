@@ -1,0 +1,66 @@
+
+
+
+
+   <div class="top-header">
+        <div class="top-header__inner">
+            <div class="common-wrap">
+                <div class="top-header__wrapper">
+                    <div class="top-header__left">NEED HELP?<a href="#"> +353 (0) 94 954 1691</a></div>
+                    <div class="top-header__center">
+                        <em>FREE SHIPPING</em> <em>on orders</em> <em>over <strong>75€</strong></em>
+                    </div>
+                    <div class="top-header__right">
+                        <div class="top-header__right-text">TRACK MY ORDER</div>
+                        <div class="top-header__right-country">
+                            {% if localization.language and localization.available_languages.size > 0 %}
+                                <localization-form>
+                                    {%  form 'localization', id:"header_langulage", class:"locale-switcher" %} 
+                                        <div class="top-header__country-img">
+                                           <img src="assets/img/country-img.png" alt="">
+                                         </div>
+                                    {% endform %} 
+                                </localization-form>
+                                
+                            {% endif %}
+                            {% comment %} <div class="top-header__country-img">
+                                <img src="assets/img/country-img.png" alt="">
+                            </div>
+                            <div class="top-header__language-select">
+                                <div class="top-header__language-wrap">
+                                    
+                                    <div class="top-header__language">LANGUAGE</div>
+                                    <div class="top-header__language-select-select">
+                                        <select name="language" id="language">
+                                            <option value="english">ENGLISH <em>(NZD)</em></option>
+                                            <option value="english">ENGLISH <em>(NZD)</em></option>
+                                            <option value="english">ENGLISH <em>(NZD)</em></option>
+                                            <option value="english">ENGLISH <em>(NZD)</em></option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> {% endcomment %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% schema %}
+  {
+    "name": "announcement-bar",
+    "tag": "section",
+    "class": "announcement-bar",
+    "settings": [
+      
+    ],
+    "presets": [
+      {
+        "name": "announcement-bar",
+        "settings": {
+        }
+      }
+    ]
+  }
+{% endschema %}
