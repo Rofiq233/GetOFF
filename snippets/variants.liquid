@@ -89,9 +89,48 @@
       </div>
 
     {% endfor %}
+     
+      {% if product.selling_plan_groups.size > 0 %}
+        <selling-plans class="product_selling_plans_group">
+          <div class="ontime_wrap">
+            <input type="radio" id="one-time-purchase-{{ product.id }}" value="one-time" name="purchase-option-{{ product.id }}" checked>
+            <label for="one-time-purchase-{{ product.id }}">
+                <span>One Time Purchase</span> 
+                <span>{{ product.price |  money }}</span>
+            </label>
+          </div>
+
+          {%  for group in product.selling_plan_groups %} 
+            <div class="subscription_wrap" data-subscription>
+              <div class="subscription_label">
+                <span>{{ group.name }}</span>
+                <div class="subscription_price_wrap">
+                  <span class="subscription_sale_price"></span>
+                  <span class="variant_price"></span>
+
+               
+
+                </div>
+              </div>
+                
+                <select hidden> 
+                  {% for plan in group.selling_plans %}  
+                    {%- assign frequency_name = plan.name |  split: "," -%}
+                    <option value="{{ plan.id }}" data-plan-price="{{ plan.price_adjustments.first.value }}">{{ frequency_name.first }}</option>
+                  {% endfor %}
+                </select>
+            
+              
+            </div>
+          {% endfor %}
+        </selling-plans>
+      {% endif %}
       <script type="application/json" data-product-variants>
         {{ product.variants | json }}
       </script>
+          <script type="application/json" data-selling-plan>
+      {{ product.selling_plan_groups | json }}
+    </script>  
   </product-variants>
 
 
