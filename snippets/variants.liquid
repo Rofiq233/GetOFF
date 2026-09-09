@@ -1,7 +1,7 @@
 
-
+{% comment %} version 1.0 {% endcomment %}
   
-  <product-variants
+  {% comment %} <product-variants
     class="product-variants"
     data-product-id="{{ product.id }}"
     data-product-url="{{ product.url }}"
@@ -131,6 +131,70 @@
           <script type="application/json" data-selling-plan>
       {{ product.selling_plan_groups | json }}
     </script>  
-  </product-variants>
+  </product-variants> {% endcomment %}
 
 
+
+
+
+{% comment %} version 2.0  {% endcomment %}
+
+
+<product-variants class="product-variants"
+ data-variant-style="{{ settings.variant_style }}"
+ >
+  {% for option in product.options_with_values %}
+    <div class="product-variants__option" data-option-position="{{ option.position }}">
+       <div class="product-variants__label">
+          {{ option.name }}
+        </div>
+        {% if settings.variant_style == 'button' %}
+
+          <div class="product-variants__values">
+
+            {% for value in option.values %}
+
+              {% assign input_id = 'product-variant-' | append: product.id | append: '-' | append: option.position | append: '-' | append: forloop.index %}
+                       {% assign value_available = false %}
+
+                        {% for variant in product.variants %}
+
+                          {% if variant.options contains value %}
+                            {% if variant.available and variant.inventory_quantity > 0 %}
+                              {% assign value_available = true %}
+                              {% break %}
+                            {% endif %}
+                          {% endif %}
+
+                        {% endfor %}
+              <input
+                type="radio"
+                id="{{ input_id }}"
+                name="option-{{ product.id }}-{{ option.position }}"
+                value="{{ value | escape }}"
+                class="product-variants__input"
+                {% unless value_available %}
+                  disabled
+                {% endunless %}
+               {% if  option.selected_value == value %} checked {% endif  %}
+              >
+
+              <label
+                for="{{ input_id }}"
+                class="product-variants__button"
+              >
+                {{ value }}
+              </label>
+
+            {% endfor %}
+
+          </div>
+          {% endif %}
+    </div>
+
+    
+  {% endfor %}
+  <script type="application/json" data-product-variants>
+        {{ product.variants | json }}
+      </script>
+</product-variants>

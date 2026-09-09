@@ -1,5 +1,5 @@
-           {{ 'product-variants.css' |  asset_url |  stylesheet_tag }} 
-          <div class="sellers__item">
+       {{ 'product-variants.css' |  asset_url |  stylesheet_tag }} 
+          <product-card class="sellers__item">
             <div class="sellers__card">
               <a href="{{ product.url }}">
                 {%- render 'smart-image',
@@ -41,12 +41,18 @@
                   {% endif %}
                 </div>
                 <div class="sellers__item-btn">
-                  <button type="button" data-add-to-cart class="btn-common">
-                    <span>Add to cart</span>
-                    <span class="loader"></span>
-                  </button>
+                  <product-form>
+                    {%  form 'product',product,class:"single_product" %} 
+                      <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                      <button type="submit" data-add-to-cart class="btn-common">
+                        <span>Add to cart</span>
+                        <span class="loader"></span>
+                      </button>
+                    {% endform %} 
+
+                  </product-form>
                 </div>
               </div>
 
             </div>
-          </div>
+          </product-card>
